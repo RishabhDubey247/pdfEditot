@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 export default function Home() {
   return (
     <div className={styles.container}>
-     <label for="cars">Choose a car:</label>
+     <label for="cars">Choose a car: </label>
 
 <select name="cars" id="cars">
   <option value="volvo">Volvo</option>
