@@ -1,1 +1,59 @@
+const UpdatePdf =  async (req, res) => {
 
+  const name = (req.body.name);
+  const date = (req.body.date);
+
+  // const signPath = req.file.path;
+  const pdfDoc = await PDFDocument.load(fs.readFileSync('./ag.pdf'));
+  const page = pdfDoc.getPages()[0];
+  const cambriaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  // Add name
+  page.drawText(name, { x: 270, y: 535, size: 12,font:cambriaFont });
+
+  // Add date
+  page.drawText(date, { x: 120, y: 690, size: 12,font:cambriaFont });
+
+  //3rd
+  page.drawText(name, { x: 72, y: 428, size: 12,font:cambriaFont });
+  //4th
+  page.drawText(name, { x: 105, y: 206, size: 12,font:cambriaFont });
+  //5th
+  page.drawText(name, { x: 105, y: 150, size: 12,font:cambriaFont });
+ //7th
+   page.drawText(name, { x: 105, y: 125, size: 12,font:cambriaFont});
+  //8th
+   page.drawText(name, { x: 320, y: 125, size: 12,font:cambriaFont});
+  //9th
+   page.drawText(name, { x: 90, y: 95, size: 12,font:cambriaFont});
+  //10th
+   page.drawText(name, { x: 240, y: 95, size: 12,font:cambriaFont});
+
+  // Add sign
+  // const signImage = await pdfDoc.embedPng(fs.readFileSync(signPath));
+  // const signDims = signImage.scale(0.2);
+  // page.drawImage(signImage, {
+  //   x: 100,
+  //   y: 60,
+  //   width: signDims.width,
+  //   height: signDims.height,
+  // });
+  
+  const pdfBytes = await pdfDoc.save();
+  //writeFileSync("blank.pdf", await pdfDoc.save());
+  const filename = `${Date.now()}_output.pdf`;
+
+  // Save the generated PDF to local storage
+  fs.writeFileSync(`./uploads/${filename}`, pdfBytes);
+
+  res.send(`PDF saved with filename: ${filename}`);
+  // res.set({
+  //   'Content-Type': 'application/pdf',
+  //   'Content-Disposition': 'attachment; filename="output.pdf"',
+  //   'Content-Length': pdfBytes.length,
+  // });
+  // res.setHeader('Content-Type', 'application/pdf');
+  // res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
+  // res.setHeader('Content-Length', pdfBytes.length);
+
+  //res.send('come here');
+};
